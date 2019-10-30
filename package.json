@@ -1,0 +1,22 @@
+{
+    "name": "psikus",
+    "version": "0.0.1",
+    "description": "PSI report",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gotomi/psikus.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "minimist": "^1.2.0",
+        "node-fetch": "^2.6.0"
+    },
+    "bin": {
+        "psikus": "./index.js"
+    }
+}
