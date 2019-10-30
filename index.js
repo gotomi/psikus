@@ -95,8 +95,12 @@ const config = {
 
 function validateConfig(config) {
     if (!config.url) {
-        console.log('url is required');
-        return;
+        console.error('url is required');
+        process.exit(1);
+    }
+    if (!config.key) {
+        console.warn('you should provide API key');
+
     }
 }
 
@@ -137,6 +141,16 @@ function generateTasks(config, runs) {
     }
     return tasks;
 }
+
+
+
+
+
+
+
+
+validateConfig(config);
+
 
 const tasks = generateTasks(config, runs);
 
