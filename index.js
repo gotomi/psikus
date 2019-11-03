@@ -9,23 +9,26 @@ const fetch = require('node-fetch');
 const argv = require('minimist')(process.argv.slice(2));
 const EventEmitter = require('events');
 const emitter = new EventEmitter();
+const prependHttp = require('prepend-http');
+
+
 
 const { median } = require('./lib/stat.js')
 
 
 let results = [];
 
-async function run(config) {
+async function run(params) {
 
 
-    const url = setUpQuery(config);
+    const url = setUpQuery(params);
     const response = await fetch(url)
     const json = await response.json();
 
 
 
     if (json.error) {
-        console.log(json.error)
+        console.log(json.error.code)
         return;
     }
 
@@ -84,40 +87,43 @@ function prepareResource(data) {
 //config
 const runs = argv.runs || 3;
 
-const config = {
+const params = {
     url: argv._[0],
-    key: argv.key,
-    strategy: 'mobile',
+    key: argv.key || '',
+    strategy: argv.strategy || 'mobile',
     locale: 'en-UK'
 }
 
 
 
-function validateConfig(config) {
-    if (!config.url) {
+function validateConfig(params) {
+    if (!params.url) {
         console.error('url is required');
         process.exit(1);
+    } else {
+        params.url = prependHttp(params.url);
     }
-    if (!config.key) {
+    if (!params.key) {
         console.warn('you should provide API key');
 
     }
 }
 
 
-function setUpQuery(config) {
+function setUpQuery(params) {
 
     const api = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
-    const parameters = config;
 
-    let params = new URLSearchParams();
 
-    Object.keys(parameters).forEach((key, index) => {
-        params.append(key, parameters[key])
+    let searchParams = new URLSearchParams();
+
+    Object.keys(params).forEach((key, index) => {
+        if (params[key] === '') return;
+        searchParams.append(key, params[key])
     });
 
     let query = new URL(api);
-    query.search = params.toString();
+    query.search = searchParams.toString();
     return query;
 }
 
@@ -128,15 +134,15 @@ function setUpQuery(config) {
 
 
 
-function generateTasks(config, runs) {
+function generateTasks(params, runs) {
     let tasks = [];
-    const urlObject = new URL(config.url);
+    const urlObject = new URL(params.url);
     for (let i = 0; i < runs; i++) {
 
         let suffix = urlObject.search === '' ? '?' : '&';
-        let cfg = Object.assign({}, config);
-        cfg.url = `${config.url}${suffix}t=a${Math.random() * Date.now()}`
-        console.log(cfg);
+        let cfg = Object.assign({}, params);
+        cfg.url = `${params.url}${suffix}t=a${Math.random() * Date.now()}`
+
         tasks.push(run(cfg));
     }
     return tasks;
@@ -149,10 +155,10 @@ function generateTasks(config, runs) {
 
 
 
-validateConfig(config);
+validateConfig(params);
 
 
-const tasks = generateTasks(config, runs);
+const tasks = generateTasks(params, runs);
 
 Promise.all([...tasks]).then(() => {
 
@@ -169,4 +175,4 @@ Promise.all([...tasks]).then(() => {
 });
 
 emitter.on('psi', (message) => console.log('PSI received: ', message))
-console.log('PSI for ', config.url);
+console.log('PSI for ', params.url);
