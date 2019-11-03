@@ -43,10 +43,10 @@ async function run(params) {
 
         let onerun = {
             psi: psiScore,
-            rs: prepareResource(resource),
-            m: prepareMetrics(audits),
-            ds: domSize,
-            // tmb: screenshots
+            breakdown: prepareResource(resource),
+            metrics: prepareMetrics(audits),
+            dom: domSize,
+            //tmb: JSON.stringify(screenshots)
         }
 
         results.push(onerun);
@@ -76,11 +76,11 @@ function prepareMetrics(data) {
 
 
 function prepareResource(data) {
-    let rs = {};
+    let breakdown = {};
     data.forEach(item => {
-        rs[item.resourceType] = { reqs: item.requestCount, size: item.size }
+        breakdown[item.resourceType] = { requests: item.requestCount, bytes: item.size }
     });
-    return rs;
+    return breakdown;
 }
 
 
@@ -166,12 +166,11 @@ Promise.all([...tasks]).then(() => {
     if (results.length % 2 === 0) results.pop(); // for the sake of simplicity - make sure it's an odd number 
     const psiData = results.map(item => item.psi)
     const medianPSI = median([...psiData]);
-    let medianData = {}
-    medianData = results.filter(item => item.psi === medianPSI)[0];
-    medianData.date = Date.now();
+    let medianData = results.filter(item => item.psi === medianPSI)[0];
+    if (medianData.psi) { medianData.time = Date.now(); }
 
     console.log(`PSI median from ${results.length} runs: `, medianPSI);
-    console.dir(medianData);
+    console.dir(JSON.stringify(medianData));
 });
 
 emitter.on('psi', (message) => console.log('PSI received: ', message))
