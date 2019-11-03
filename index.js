@@ -6,6 +6,7 @@ let resource = [];
 let audits = {};
 
 const fetch = require('node-fetch');
+const parseNum = require('parse-num');
 const argv = require('minimist')(process.argv.slice(2));
 const EventEmitter = require('events');
 const emitter = new EventEmitter();
@@ -45,7 +46,7 @@ async function run(params) {
             psi: psiScore,
             breakdown: prepareResource(resource),
             metrics: prepareMetrics(audits),
-            dom: domSize,
+            dom: parseNum(domSize),
             //tmb: JSON.stringify(screenshots)
         }
 
@@ -69,7 +70,7 @@ function prepareMetrics(data) {
 
     let filteredMetrics = {};
     metrics.forEach(item => {
-        filteredMetrics[item] = data[item].displayValue
+        filteredMetrics[item] = parseNum(data[item].displayValue)
     })
     return filteredMetrics;
 }
