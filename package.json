@@ -13,6 +13,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "log-update": "^3.3.0",
         "minimist": "^1.2.0",
         "node-fetch": "^2.6.0",
         "parse-num": "^1.0.0",

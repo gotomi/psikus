@@ -5,6 +5,7 @@
 let resource = [];
 let audits = {};
 
+const logUpdate = require('log-update');
 const fetch = require('node-fetch');
 const parseNum = require('parse-num');
 const argv = require('minimist')(process.argv.slice(2));
@@ -29,7 +30,8 @@ async function run(params) {
 
 
     if (json.error) {
-        console.log(json.error.code)
+        //console.log(json.error.code);
+        emitter.emit('psi', false);
         return;
     }
 
@@ -40,7 +42,7 @@ async function run(params) {
         audits = json.lighthouseResult.audits;
         screenshots = json.lighthouseResult.audits["screenshot-thumbnails"];
 
-        emitter.emit('psi', `${psiScore}`);
+        emitter.emit('psi', true);
 
         let onerun = {
             psi: psiScore,
@@ -169,10 +171,21 @@ Promise.all([...tasks]).then(() => {
     const medianPSI = median([...psiData]);
     let medianData = results.filter(item => item.psi === medianPSI)[0];
     if (medianData.psi) { medianData.time = Date.now(); }
-
-    console.log(`PSI median from ${results.length} runs: `, medianPSI);
+    displayState += `\nPSI median from ${results.length} runs: ${medianPSI}`;
+    logUpdate(displayState);
     console.dir(JSON.stringify(medianData));
 });
 
-emitter.on('psi', (message) => console.log('PSI received: ', message))
-console.log('PSI for ', params.url);
+
+
+
+let progressBar = [];
+let displayState = ``;
+
+emitter.on('psi', (isPSI) => {
+    let point = isPSI ? '■' : '□';
+    progressBar.push(point);
+    displayState = `PSI for ${params.url}
+${progressBar.join('').padEnd(runs)} ${results.length} / ${runs}`;
+    logUpdate(displayState);
+});
