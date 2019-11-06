@@ -12,6 +12,8 @@ const argv = require('minimist')(process.argv.slice(2));
 const EventEmitter = require('events');
 const emitter = new EventEmitter();
 const prependHttp = require('prepend-http');
+const chalk = require('chalk');
+ 
 
 
 
@@ -172,6 +174,7 @@ Promise.all([...tasks]).then(() => {
     let medianData = results.filter(item => item.psi === medianPSI)[0];
     if (medianData.psi) { medianData.time = Date.now(); }
     displayState += `\nPSI median from ${results.length} runs: ${medianPSI}`;
+    logUpdate.done();
     logUpdate(displayState);
     console.dir(JSON.stringify(medianData));
 });
@@ -185,7 +188,7 @@ let displayState = ``;
 emitter.on('psi', (isPSI) => {
     let point = isPSI ? '■' : '□';
     progressBar.push(point);
-    displayState = `PSI for ${params.url}
-${progressBar.join('').padEnd(runs)} ${results.length} / ${runs}`;
-    logUpdate(displayState);
+    logUpdate(progressBar.join(''));
 });
+
+console.log(`PSI for ${params.url}`);
