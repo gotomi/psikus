@@ -12,8 +12,6 @@ const argv = require('minimist')(process.argv.slice(2));
 const EventEmitter = require('events');
 const emitter = new EventEmitter();
 const prependHttp = require('prepend-http');
-const chalk = require('chalk');
- 
 
 
 
@@ -32,7 +30,7 @@ async function run(params) {
 
 
     if (json.error) {
-        //console.log(json.error.code);
+        //console.log(json.error);
         emitter.emit('psi', false);
         return;
     }
