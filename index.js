@@ -2,8 +2,6 @@
 
 //https://developers.google.com/speed/docs/insights/v5/get-started
 
-let resource = [];
-let audits = {};
 
 const logUpdate = require('log-update');
 const fetch = require('node-fetch');
@@ -13,34 +11,59 @@ const EventEmitter = require('events');
 const emitter = new EventEmitter();
 const prependHttp = require('prepend-http');
 
-
-
 const { median } = require('./lib/stat.js')
+
+
+
+//config
+const runs = argv.runs || 3;
+
+const params = {
+    url: argv._[0],
+    key: argv.key || '',
+    strategy: argv.strategy || 'mobile',
+    locale: 'en-UK'
+}
+
+
+
+function validateConfig(params) {
+    if (!params.url) {
+        console.error('url is required');
+        process.exit(1);
+    } else {
+        params.url = prependHttp(params.url);
+    }
+    if (!params.key) {
+        console.warn('you should provide API key');
+
+    }
+}
+
+
+
 
 
 let results = [];
 
-async function run(params) {
 
+async function run(params) {
 
     const url = setUpQuery(params);
     const response = await fetch(url)
     const json = await response.json();
 
-
-
     if (json.error) {
-        //console.log(json.error);
         emitter.emit('psi', false);
         return;
     }
 
     try {
-        psiScore = json.lighthouseResult.categories.performance.score;
-        resource = json.lighthouseResult.audits["resource-summary"].details.items;
-        domSize = json.lighthouseResult.audits["dom-size"].displayValue;
-        audits = json.lighthouseResult.audits;
-        screenshots = json.lighthouseResult.audits["screenshot-thumbnails"];
+        const psiScore = json.lighthouseResult.categories.performance.score;
+        const resource = json.lighthouseResult.audits["resource-summary"].details.items;
+        const domSize = json.lighthouseResult.audits["dom-size"].displayValue;
+        const audits = json.lighthouseResult.audits;
+        //const thumbnails = json.lighthouseResult.audits["screenshot-thumbnails"];
 
         emitter.emit('psi', true);
 
@@ -49,7 +72,7 @@ async function run(params) {
             breakdown: prepareResource(resource),
             metrics: prepareMetrics(audits),
             dom: parseNum(domSize),
-            //tmb: JSON.stringify(screenshots)
+            //thumbnails: JSON.stringify(screenshots)
         }
 
         results.push(onerun);
@@ -87,40 +110,15 @@ function prepareResource(data) {
 }
 
 
-//config
-const runs = argv.runs || 3;
 
-const params = {
-    url: argv._[0],
-    key: argv.key || '',
-    strategy: argv.strategy || 'mobile',
-    locale: 'en-UK'
-}
-
-
-
-function validateConfig(params) {
-    if (!params.url) {
-        console.error('url is required');
-        process.exit(1);
-    } else {
-        params.url = prependHttp(params.url);
-    }
-    if (!params.key) {
-        console.warn('you should provide API key');
-
-    }
-}
 
 
 function setUpQuery(params) {
-
     const api = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
-
 
     let searchParams = new URLSearchParams();
 
-    Object.keys(params).forEach((key, index) => {
+    Object.keys(params).forEach((key) => {
         if (params[key] === '') return;
         searchParams.append(key, params[key])
     });

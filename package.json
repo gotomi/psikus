@@ -21,5 +21,8 @@
     },
     "bin": {
         "psikus": "./index.js"
+    },
+    "devDependencies": {
+        "eslint": "^6.6.0"
     }
 }
