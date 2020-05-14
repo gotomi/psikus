@@ -2,14 +2,14 @@
 
 ## Installation
 
-`npm i`
+`npm i -g`
 
 ## Usage
 
 ### PageSpeedInsight API
 
-`node ./bin/index google.com --runs 5`
+`psikus google.com --runs 5`
 
 ### Local Lighthouse
 
-`node ./bin/index google.com --mode lighthouse --runs 5`
+`psikus google.com --mode lighthouse --runs 5`
