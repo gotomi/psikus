@@ -9,7 +9,7 @@
     "lighthouse",
     "psi",
     "webperf",
-    "perfmatters"
+    "perfmatters",
     "metrics"
   ],
   "scripts": {
