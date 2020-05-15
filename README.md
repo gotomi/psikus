@@ -1,4 +1,5 @@
-# psikus - PSI report
+# psikus
+command line tool for testing PSI score
 
 ## Installation
 
