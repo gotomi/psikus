@@ -1,6 +1,6 @@
 {
   "name": "psikus",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "PSI report",
   "main": "run-psi-api.js",
   "keywords": [
