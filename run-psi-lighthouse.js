@@ -32,7 +32,7 @@ function run(url, display, runs, callback) {
   const opts = {
     onlyCategories: ['performance'],
     chromeFlags: ['--headless'],
-    blockedUrlPatterns: argv.blocked || []
+    blockedUrlPatterns: argv.block || []
   };
   launchChromeAndRunLighthouse(url, opts).then(results => {
     counter++;
