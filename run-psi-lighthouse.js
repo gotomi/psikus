@@ -28,12 +28,11 @@ function launchChromeAndRunLighthouse(url, opts, config = null) {
   });
 }
 
-
-
 function run(url, display, runs, callback) {
   const opts = {
     onlyCategories: ['performance'],
-    chromeFlags: ['--headless']
+    chromeFlags: ['--headless'],
+    blockedUrlPatterns: argv.block || []
   };
   launchChromeAndRunLighthouse(url, opts).then(results => {
     counter++;
