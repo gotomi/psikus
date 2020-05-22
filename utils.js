@@ -1,3 +1,4 @@
+const argv = require('minimist')(process.argv.slice(2));
 const psiScore = require('./psi-score');
 const lighthouseData = require('./metrics');
 const {
@@ -9,6 +10,7 @@ const {
 function pushDataAndDisplayScore(results, allResults, counter) {
 
     const LH = lighthouseData.getLighthouseData(results);
+    LH.label = argv.label || '';  //todo
     LH.score = psiScore.calculatePSIScore(LH.metrics);
 
     allResults.push(LH);
