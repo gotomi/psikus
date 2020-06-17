@@ -6,12 +6,13 @@ const prependHttp = require('prepend-http');
 const runs = argv.runs || 3;
 const display = argv.display || 'pretty';
 const url = prependHttp(argv._[0]);
-const mode = argv.mode || 'api';
-
+const local = argv.local || false;
 
 const lighthouse = require('../run-psi-lighthouse');
 const psi = require('../run-psi-api');
 
-
-mode === 'api' && psi.go(url, display, runs);
-mode === 'lighthouse' && lighthouse.go(url, display, runs);
+if (local) {
+	lighthouse.go(url, display, runs);
+} else {
+	psi.go(url, display, runs);
+}

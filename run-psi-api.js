@@ -108,7 +108,7 @@ function go(url, display, runs) {
     const tasks = generateTasks(params, runs);
 
     Promise.all([...tasks]).then(() => {
-        if(allResults.length === 0) {console.log('not enough data'); return} 
+      //  if(allResults.length === 0) {console.log('not enough data'); return} 
         const medianData = utils.getMedianData(allResults);
         utils.displayMedianData(medianData, display)
 
