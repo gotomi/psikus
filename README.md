@@ -3,7 +3,7 @@ command line tool for testing PSI score
 
 ## Installation
 
-`npm i -g`
+`npm install -g`
 
 ## Usage
 
@@ -13,4 +13,4 @@ command line tool for testing PSI score
 
 ### Local Lighthouse
 
-`psikus google.com --mode lighthouse --runs 5`
+`psikus google.com --local --runs 5`

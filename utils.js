@@ -36,10 +36,9 @@ function displayMedianData(medianData, display) {
         console.table(medianData.requests.hosts)
         console.table(medianData.requests.summary)
 
-        const fs = require('fs');
-        fs.writeFile(`./${medianData.label}-${medianData.fetchTime}.json`, JSON.stringify(medianData), 'utf8', function(){
-
-        });
+        // const fs = require('fs');
+        // fs.writeFile(`./${medianData.label}-${medianData.fetchTime}.json`, JSON.stringify(medianData), 'utf8', function(){
+        // });
 
         console.log();
     } else {
