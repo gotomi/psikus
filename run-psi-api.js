@@ -48,12 +48,14 @@ async function run(params, runs) {
     const json = await response.json();
     counter++;
     if (json.error) {
-        console.log(`run ${counter}/${runs} ❌`);
+        console.log(`run ${counter}/${runs} ❌ ${JSON.stringify(json.error)}`);
+
         return;
     }
 
     try {
         const results = json.lighthouseResult;
+        
         utils.pushDataAndDisplayScore(results, allResults, counter);
         console.log(`run ${counter}/${runs} ✅`);
 
@@ -108,7 +110,7 @@ function go(url, display, runs) {
     const tasks = generateTasks(params, runs);
 
     Promise.all([...tasks]).then(() => {
-      //  if(allResults.length === 0) {console.log('not enough data'); return} 
+       if(allResults.length === 0) {console.log('not enough data'); return} 
         const medianData = utils.getMedianData(allResults);
         utils.displayMedianData(medianData, display)
 
