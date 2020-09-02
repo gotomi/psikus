@@ -24,7 +24,6 @@
   "dependencies": {
     "@sindresorhus/slugify": "^1.0.0",
     "lighthouse": "^6.3.0",
-    "lodash": "^4.17.15",
     "minimist": "^1.2.5",
     "node-fetch": "^2.6.0",
     "prepend-http": "^3.0.1"
