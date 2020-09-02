@@ -47,9 +47,7 @@ function isFirstParty(host, list) {
 }
 
 
-
 function enrichRequests(requests, firstPartyDomainList) {
-
     requests.forEach((item, index) => {
         item.thirdParty = !isFirstParty(host, firstPartyDomain)
     })
@@ -66,6 +64,7 @@ function groupRequests(requests) {
     let summary = {};
     requests.forEach((item, index) => {
         host = (new URL(item.url)).host;
+ //     host = (new URL(item.url)).hostname.split('.').slice(-2).join('.');
 
         if (index === 0) {
             firstPartyDomain.push(host);
