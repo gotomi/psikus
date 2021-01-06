@@ -5,6 +5,11 @@ command line tool for testing PSI score
 
 `npm install -g`
 
+
+### installation on Ubuntu without GUI
+- don't use root account
+- sudo apt install chromium-browser
+
 ## Usage
 
 ### PageSpeedInsight API

@@ -31,7 +31,7 @@ function validateConfig(params) {
         params.url = prependHttp(params.url);
     }
     if (!params.key) {
-        console.warn('you should provide API key');
+        console.warn('you can provide API key');
 
     }
 }
