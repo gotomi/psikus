@@ -1,12 +1,13 @@
 # psikus
-command line tool for testing PSI score
+
+Command line tool for testing PSI score
 
 ## Installation
 
 `npm install -g`
 
 
-### installation on Ubuntu without GUI
+### Installation on Ubuntu without GUI
 - don't use root account
 - sudo apt install chromium-browser
 
