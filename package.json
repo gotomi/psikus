@@ -1,6 +1,6 @@
 {
   "name": "psikus",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "PSI report",
   "main": "run-psi-api.js",
   "keywords": [
@@ -23,7 +23,7 @@
   "license": "ISC",
   "dependencies": {
     "@sindresorhus/slugify": "^1.0.0",
-    "lighthouse": "^7.0",
+    "lighthouse": "^8.0.0",
     "minimist": "^1.2.5",
     "node-fetch": "^2.6.1",
     "prepend-http": "^3.0.1"
