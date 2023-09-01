@@ -1,6 +1,6 @@
 {
   "name": "psikus",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "PSI report",
   "main": "run-psi-api.js",
   "keywords": [
@@ -13,7 +13,9 @@
     "metrics"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ext \".ts,.js,.vue\" --ignore-path .gitignore --ignore-pattern 'apiExplorer' .",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
@@ -22,13 +24,19 @@
   "author": "gotomi",
   "license": "ISC",
   "dependencies": {
-    "@sindresorhus/slugify": "^2.1.0",
-    "lighthouse": "^9.6.2",
-    "minimist": "^1.2.6",
-    "node-fetch": "^2.6.7",
-    "prepend-http": "^3.0.1"
+    "@sindresorhus/slugify": "^2.2.1",
+    "chrome-launcher": "^1.0.0",
+    "lighthouse": "11.0.0",
+    "minimist": "^1.2.8",
+    "prepend-http": "^4.0.0"
   },
   "bin": {
     "psikus": "bin/index.js"
+  },
+  "type": "module",
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0"
   }
 }
