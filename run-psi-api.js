@@ -41,8 +41,7 @@ async function run(params, runs) {
   try {
     const results = json.lighthouseResult;
 
-    utils.pushDataAndDisplayScore(results, allResults, counter);
-    console.log(`run ${counter}/${runs} ✅`);
+    utils.pushDataAndDisplayScore(results, allResults, counter, runs);
   } catch (e) {
     console.log(e);
   }
@@ -79,7 +78,7 @@ function generateTasks(params, runs) {
   return tasks;
 }
 
-export function goPSIApi(url, display, runs) {
+export function runPageSpeedApi(url, display, runs) {
   const params = {
     url: url,
     key: argv.key || '',

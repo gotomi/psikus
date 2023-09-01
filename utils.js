@@ -6,14 +6,15 @@ import { calculatePSIScore } from './psi-score.js';
 import lighthouseData from './metrics.js';
 import stat from './lib/stat.js';
 
-function pushDataAndDisplayScore(results, allResults, counter) {
+function pushDataAndDisplayScore(results, allResults, counter, runs) {
   const LH = lighthouseData.getLighthouseData(results);
 
   LH.label = argv.label || ''; //todo
   LH.score = calculatePSIScore(LH.metrics);
 
   allResults.push(LH);
-  console.log(`Run ${counter}:  ${JSON.stringify(LH.score)}`);
+
+  console.log(` ✅ run ${counter}/${runs} - PSI score: ${JSON.stringify(LH.score.v10)}`);
 }
 
 function getMedianData(allResults) {

@@ -1,7 +1,7 @@
-import fs from 'fs';
+// import fs from 'fs';
 
 const getLighthouseData = function (results) {
-  fs.writeFileSync('results.json', JSON.stringify(results));
+  //   fs.writeFileSync('results.json', JSON.stringify(results));
 
   const psiScore = results.categories.performance.score;
   const requests = results.audits['network-requests'].details.items.filter((it) => it.statusCode !== -1);

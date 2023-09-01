@@ -16,7 +16,6 @@ function launchChromeAndRunLighthouse(url, opts, config = null) {
     opts.port = chrome.port;
 
     return lighthouse(url, opts, config).then((results) => {
-      // return chrome.kill().then(() => results.lhr);
       chrome.kill();
 
       return results.lhr;
@@ -27,14 +26,13 @@ function launchChromeAndRunLighthouse(url, opts, config = null) {
 function run(url, display, runs, callback) {
   const opts = {
     onlyCategories: ['performance'],
-    chromeFlags: ['--ignore-certificate-errors'],
+    chromeFlags: ['--headless', '--ignore-certificate-errors'],
     blockedUrlPatterns: argv.block || [],
   };
 
   launchChromeAndRunLighthouse(url, opts).then((results) => {
     counter++;
-    utils.pushDataAndDisplayScore(results, allResults, counter);
-    console.log(`run ${counter}/${runs} ✅`);
+    utils.pushDataAndDisplayScore(results, allResults, counter, runs);
 
     if (counter < runs) {
       run(url, display, runs, callback);
@@ -48,7 +46,7 @@ function run(url, display, runs, callback) {
   });
 }
 
-export function goLighthouse(url, display, runs) {
+export function runLighthouse(url, display, runs) {
   run(url, display, runs, function (metrics, url) {
     console.log(`Median from ${counter} runs for ${url}`);
     utils.displayMedianData(metrics, display);
