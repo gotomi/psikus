@@ -1,13 +1,13 @@
-import utils from './utils.js';
-import minimist from 'minimist';
+import utils from "./utils.js";
+import minimist from "minimist";
 
 const argv = minimist(process.argv.slice(2));
 
 let allResults = [];
 let counter = 0;
 
-import lighthouse from 'lighthouse';
-import { launch } from 'chrome-launcher';
+import lighthouse from "lighthouse";
+import { launch } from "chrome-launcher";
 
 function launchChromeAndRunLighthouse(url, opts, config = null) {
   return launch({
@@ -25,9 +25,9 @@ function launchChromeAndRunLighthouse(url, opts, config = null) {
 
 function run(url, display, runs, callback) {
   const opts = {
-    onlyCategories: ['performance'],
-    chromeFlags: ['--headless', '--ignore-certificate-errors'],
-    blockedUrlPatterns: argv.block || [],
+    onlyCategories: ["performance"],
+    chromeFlags: ["--headless", "--ignore-certificate-errors"],
+    "blocked-url-patterns": argv.block || [],
   };
 
   launchChromeAndRunLighthouse(url, opts).then((results) => {
@@ -39,7 +39,7 @@ function run(url, display, runs, callback) {
     } else {
       const medianData = utils.getMedianData(allResults);
 
-      if (typeof callback === 'function') {
+      if (typeof callback === "function") {
         callback(medianData, url);
       }
     }

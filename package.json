@@ -1,6 +1,6 @@
 {
   "name": "psikus",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "PSI report",
   "main": "run-psi-api.js",
   "keywords": [
@@ -25,8 +25,8 @@
   "license": "ISC",
   "dependencies": {
     "@sindresorhus/slugify": "^2.2.1",
-    "chrome-launcher": "^1.1.0",
-    "lighthouse": "11.5.0",
+    "chrome-launcher": "^1.1.2",
+    "lighthouse": "12.1.0",
     "minimist": "^1.2.8",
     "prepend-http": "^4.0.0"
   },
@@ -35,7 +35,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "eslint": "^8.56.0",
+    "eslint": "^9.5.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3"
   }
