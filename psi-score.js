@@ -25,7 +25,7 @@ const scoreWeights = {
 };
 
 function prepareData(version, metrics) {
-  const lhVersion = version === 'v6' ? scoreWeights.v6 : scoreWeights.v8;
+  const lhVersion = version === "v6" ? scoreWeights.v6 : scoreWeights.v8;
 
   let data = [];
   for (let [metric, weight] of Object.entries(lhVersion)) {
@@ -73,9 +73,9 @@ function getScore(items) {
 }
 
 export function calculatePSIScore(metrics) {
-  const v6 = prepareData('v6', metrics);
-  const v8 = prepareData('v8', metrics);
-  const v10 = prepareData('v10', metrics);
+  const v6 = prepareData("v6", metrics);
+  const v8 = prepareData("v8", metrics);
+  const v10 = prepareData("v10", metrics);
 
   return {
     v6: getScore(v6),

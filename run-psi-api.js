@@ -2,23 +2,23 @@
 
 //https://developers.google.com/speed/docs/insights/v5/get-started
 
-import utils from './utils.js';
-import minimist from 'minimist';
+import utils from "./utils.js";
+import minimist from "minimist";
 
 const argv = minimist(process.argv.slice(2));
 
-import prependHttp from 'prepend-http';
+import prependHttp from "prepend-http";
 
 function validateConfig(params) {
   if (!params.url) {
-    console.error('url is required');
+    console.error("url is required");
     process.exit(1);
   } else {
     params.url = prependHttp(params.url);
   }
 
   if (!params.key) {
-    console.warn('you can provide API key');
+    console.warn("you can provide API key");
   }
 }
 
@@ -48,12 +48,12 @@ async function run(params, runs) {
 }
 
 function setUpQuery(params) {
-  const api = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
+  const api = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
 
   let searchParams = new URLSearchParams();
 
   Object.keys(params).forEach((key) => {
-    if (params[key] === '') return;
+    if (params[key] === "") return;
     searchParams.append(key, params[key]);
   });
 
@@ -69,7 +69,7 @@ function generateTasks(params, runs) {
   const urlObject = new URL(params.url);
 
   for (let i = 0; i < runs; i++) {
-    let suffix = urlObject.search === '' ? '?' : '&';
+    let suffix = urlObject.search === "" ? "?" : "&";
     let cfg = Object.assign({}, params);
     cfg.url = `${params.url}${suffix}t=a${Math.random() * Date.now()}`;
     tasks.push(run(cfg, runs));
@@ -81,9 +81,9 @@ function generateTasks(params, runs) {
 export function runPageSpeedApi(url, display, runs) {
   const params = {
     url: url,
-    key: argv.key || '',
-    strategy: argv.strategy || 'mobile',
-    locale: 'en-UK',
+    key: argv.key || "",
+    strategy: argv.strategy || "mobile",
+    locale: "en-UK",
   };
 
   validateConfig(params);
@@ -92,7 +92,7 @@ export function runPageSpeedApi(url, display, runs) {
 
   Promise.all([...tasks]).then(() => {
     if (allResults.length === 0) {
-      console.log('not enough data');
+      console.log("not enough data");
 
       return;
     }

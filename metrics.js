@@ -4,10 +4,12 @@ const getLighthouseData = function (results) {
   //   fs.writeFileSync('results.json', JSON.stringify(results));
 
   const psiScore = results.categories.performance.score;
-  const requests = results.audits['network-requests'].details.items.filter((it) => it.statusCode !== -1);
-  const domSize = results.audits['dom-size'].numericValue;
+  const requests = results.audits["network-requests"].details.items.filter(
+    (it) => it.statusCode !== -1,
+  );
+  const domSize = results.audits["dom-size"].numericValue;
   const audits = results.audits;
-  const screenshot = results.audits['final-screenshot'].details.data;
+  const screenshot = results.audits["final-screenshot"].details.data;
   const fetchTime = results.fetchTime;
   const url = results.requestedUrl;
   const onerun = {
@@ -25,14 +27,14 @@ const getLighthouseData = function (results) {
   return onerun;
 };
 const metricsShort = {
-  FCP: 'first-contentful-paint',
-  LCP: 'largest-contentful-paint',
-  FMP: 'first-meaningful-paint',
-  SI: 'speed-index',
-  TBT: 'total-blocking-time',
-  CLS: 'cumulative-layout-shift',
-  FCI: 'first-cpu-idle',
-  TTI: 'interactive',
+  FCP: "first-contentful-paint",
+  LCP: "largest-contentful-paint",
+  FMP: "first-meaningful-paint",
+  SI: "speed-index",
+  TBT: "total-blocking-time",
+  CLS: "cumulative-layout-shift",
+  FCI: "first-cpu-idle",
+  TTI: "interactive",
 };
 
 // TMP
@@ -82,17 +84,24 @@ function groupRequests(requests) {
       };
     } else {
       br[rt].requests += 1;
-      (br[rt].transferSize += item.transferSize), (br[rt].resourceSize += item.resourceSize);
+      (br[rt].transferSize += item.transferSize),
+        (br[rt].resourceSize += item.resourceSize);
     }
   });
 
-  const thirdPartyList = Object.values(hosts).filter((item) => !item.firstParty);
+  const thirdPartyList = Object.values(hosts).filter(
+    (item) => !item.firstParty,
+  );
   const firstPartyList = Object.values(hosts).filter((item) => item.firstParty);
 
   summary = {
-    thirdParty: thirdPartyList.map((item) => item.requests).reduce((a, b) => a + b, 0),
+    thirdParty: thirdPartyList
+      .map((item) => item.requests)
+      .reduce((a, b) => a + b, 0),
 
-    firstParty: firstPartyList.map((item) => item.requests).reduce((a, b) => a + b, 0),
+    firstParty: firstPartyList
+      .map((item) => item.requests)
+      .reduce((a, b) => a + b, 0),
     total: Object.values(hosts)
       .map((item) => item.requests)
       .reduce((a, b) => a + b, 0),
@@ -113,7 +122,9 @@ function prepareMetrics(data, metricsShort) {
   for (let [key, value] of Object.entries(metricsShort)) {
     if (data[value]) {
       const metricValue =
-        data[value].numericUnit == 'millisecond' ? Math.floor(data[value].numericValue) : data[value].numericValue;
+        data[value].numericUnit == "millisecond"
+          ? Math.floor(data[value].numericValue)
+          : data[value].numericValue;
 
       filteredMetrics[key] = {
         score: data[value].score,
