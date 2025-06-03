@@ -18,7 +18,7 @@ function validateConfig(params) {
   }
 
   if (!params.key) {
-    console.warn("you can provide API key");
+    console.warn("you have to provide API key");
   }
 }
 

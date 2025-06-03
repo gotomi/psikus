@@ -37,7 +37,7 @@ You also need Chrome installed on the system if running in the local mode.
 ## Usage
 
 ```bash
-psikus <url> [options]
+psikus --key YOUR_API_KEY <url> [options]
 ```
 
 **`<url>`:** The URL of the website to test (required).  The URL will be automatically prepended with `http://` if no protocol is specified.
