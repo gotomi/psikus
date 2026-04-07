@@ -2,12 +2,11 @@
 
 const getLighthouseData = function (results) {
   //   fs.writeFileSync('results.json', JSON.stringify(results));
-
   const psiScore = results.categories.performance.score;
   const requests = results.audits["network-requests"].details.items.filter(
     (it) => it.statusCode !== -1,
   );
-  const domSize = results.audits["dom-size"].numericValue;
+  const domSize = results.audits["dom-size-insight"].numericValue;
   const audits = results.audits;
   const screenshot = results.audits["final-screenshot"].details.data;
   const fetchTime = results.fetchTime;
@@ -53,7 +52,7 @@ function groupRequests(requests) {
 
   let hosts = {};
   let br = {};
-  let summary = {};
+  let summary;
   requests.forEach((item, index) => {
     const host = new URL(item.url).host;
 
