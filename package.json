@@ -26,7 +26,7 @@
   "dependencies": {
     "@sindresorhus/slugify": "^3.0.0",
     "chrome-launcher": "^1.2.1",
-    "lighthouse": "13.3.0",
+    "lighthouse": "13.4.1",
     "minimist": "^1.2.8",
     "prepend-http": "^4.0.0"
   },
