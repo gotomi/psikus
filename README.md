@@ -11,11 +11,9 @@ Psikus is a command-line tool for running performance tests on websites using Go
 *   **Detailed metrics:** Provides a comprehensive set of performance metrics, including:
     *   First Contentful Paint (FCP)
     *   Largest Contentful Paint (LCP)
-    *   First Meaningful Paint (FMP)
     *   Speed Index (SI)
     *   Total Blocking Time (TBT)
     *   Cumulative Layout Shift (CLS)
-    *   First CPU Idle (FCI)
     *   Time to Interactive (TTI)
     * Number of requests (total, first-party, third-party)
     * Transfer size and resource size, aggregated by host and resource type
@@ -32,7 +30,7 @@ Psikus is a command-line tool for running performance tests on websites using Go
 ```bash
 npm install -g psikus
 ```
-You also need Chrome installed on the system if running in the local mode.
+Requires Node.js 22.19 or newer. You also need Chrome installed on the system if running in the local mode.
 
 ## Usage
 
@@ -40,7 +38,7 @@ You also need Chrome installed on the system if running in the local mode.
 psikus --key YOUR_API_KEY <url> [options]
 ```
 
-**`<url>`:** The URL of the website to test (required).  The URL will be automatically prepended with `http://` if no protocol is specified.
+**`<url>`:** The URL of the website to test (required).  The URL will be automatically prepended with `https://` if no protocol is specified.
 
 **Options:**
 

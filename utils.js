@@ -23,7 +23,11 @@ function getMedianData(allResults) {
   const psiData = allResults.map((item) => item.psi);
   const medianPSI = stat.median([...psiData]);
 
-  return allResults.filter((item) => item.psi === medianPSI)[0];
+  return allResults.reduce((closest, item) =>
+    Math.abs(item.psi - medianPSI) < Math.abs(closest.psi - medianPSI)
+      ? item
+      : closest,
+  );
 }
 
 function displayMedianData(medianData, display) {

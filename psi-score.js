@@ -25,7 +25,7 @@ const scoreWeights = {
 };
 
 function prepareData(version, metrics) {
-  const lhVersion = version === "v6" ? scoreWeights.v6 : scoreWeights.v8;
+  const lhVersion = scoreWeights[version];
 
   let data = [];
   for (let [metric, weight] of Object.entries(lhVersion)) {

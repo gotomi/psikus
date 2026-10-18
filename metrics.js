@@ -28,11 +28,9 @@ const getLighthouseData = function (results) {
 const metricsShort = {
   FCP: "first-contentful-paint",
   LCP: "largest-contentful-paint",
-  FMP: "first-meaningful-paint",
   SI: "speed-index",
   TBT: "total-blocking-time",
   CLS: "cumulative-layout-shift",
-  FCI: "first-cpu-idle",
   TTI: "interactive",
 };
 
